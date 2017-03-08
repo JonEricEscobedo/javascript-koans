@@ -37,9 +37,18 @@ describe("About Applying What We Have Learnt", function() {
       var productsICanEat = [];
 
       /* solve using filter() & all() / any() */
+      // From AboutHighOrderFunctions.js:
+        // var odd = _(numbers).filter(function(x) { return x % 2 !== 0 });
+        // expect(_(onlyEven).any(isEven)).toBe(true);
       
 
-      expect(productsICanEat.length).toBe(FILL_ME_IN);
+      productsICanEat = _(products).filter(function(item) {
+        return !item.containsNuts && !_(item.ingredients).any(function(ingredient) {
+          return ingredient === 'mushrooms';
+        })
+      });
+
+      expect(productsICanEat.length).toBe(1);
   });
 
   /*********************************************************************************/
