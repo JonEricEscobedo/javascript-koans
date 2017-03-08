@@ -62,13 +62,28 @@ describe("About Applying What We Have Learnt", function() {
       }
     }
     
-    expect(sum).toBe(FILL_ME_IN);
+    expect(sum).toBe(233168);
   });
 
   it("should add all the natural numbers below 1000 that are multiples of 3 or 5 (functional)", function () {
-    var sum = FILL_ME_IN;    /* try chaining range() and reduce() */
+    var sum = _(_.range(1000)).chain() /* try chaining range() and reduce() */
+                                 .reduce(function(sum, i) {
+                                    if (i % 3 === 0 || i % 5 === 0) {
+                                      sum += i
+                                    }
+                                    return sum;
+                                 })
+                                 .value();
+    // From AboutHighOrderFunctions.js:
+    //  _.range(3) === [0, 1, 2];
+    // var numbers   = [1, 2, 3];
+    // var reduction = _(numbers).reduce(
+    //   function(memo, x) {
+    //   // note: memo is the result from last call, and x is the current number
+    //     return memo + x;
+    //   }, 
 
-    expect(233168).toBe(FILL_ME_IN);
+    expect(233168).toBe(sum);
   });
 
   /*********************************************************************************/
@@ -81,15 +96,28 @@ describe("About Applying What We Have Learnt", function() {
         }
     }
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   it("should count the ingredient occurrence (functional)", function () {
     var ingredientCount = { "{ingredient name}": 0 };
 
     /* chain() together map(), flatten() and reduce() */
+    _(products).chain()
+               .map(function(product) { return product.ingredients })
+               .flatten()
+               .reduce(function(sum, x) { return ingredientCount[x] = (ingredientCount[x] || 0) + 1 })
+               .value();
 
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    // From AboutHighOrderFunctions.js:
+    // var result = _([ [0, 1], 2 ]).chain()
+    //                 .flatten()
+    //                 .map(function(x) { return x+1 } )
+    //                 .reduce(function(sum, x) { return sum + x })
+    //                 .value();
+
+
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   /*********************************************************************************/
